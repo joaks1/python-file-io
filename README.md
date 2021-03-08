@@ -5,12 +5,13 @@ in Python.
 
 -   [Getting set up](#getting-set-up)
 -   [Learning objective](#learning-objective)
--   [The goal](#the-goal)
--   [The script](#the-script)
--   [Best practice 1: Put code into functions](#best-practice-1-put-code-into-functions)
--   [Best practice 2: Write modules not scripts](#best-practice-2-write-modules-not-scripts)
--   [Best practice 3: Use docstrings to document your code](#best-practice-3-use-docstrings-to-document-your-code)
--   [Best practice 4: Add tests to your docstrings](#best-practice-4-add-tests-to-your-docstrings)
+-   [Learning the basics](#learning-the-basics)
+    -   [A simple example script](#a-simple-example-script)
+-   [The Exercise](#the-exercise)
+    -   [The words to find](#the-words-to-find)
+    -   [The format of the output file](#the-format-of-the-output-file)
+    -   [Use best practices](#use-best-practices)
+-   [Extra challenges (not required)](#extra-challenges-not-required)
 -   [Acknowledgments](#acknowledgments)
 -   [License](#license)
 
@@ -58,15 +59,10 @@ At this point, you should have
 
 # Learning objective 
 
-Learn how to read and write files in Python.
+To become fluent in reading and writing files in Python.
 
 
-# Background
-
-Let's open the Python interpreter to learn some basics about how to work with
-files in Python:
-
-    $ python3
+# Learning the basics
 
 In Python, we use the `open` function to open a file.
 The basic syntax is:
@@ -75,8 +71,13 @@ The basic syntax is:
 
 The `access_mode` is usually `'r'` for **reading** from the file or `'w'` for
 **writing** to the file.
-There are other modes, but these are the most common and the only modes we will
-worry about here.
+There are other modes, but read and write are the most common and the only
+modes we will worry about here.
+
+Let's work in the Python interpreter to learn some basics about how to work
+with files in Python:
+
+    $ python3
 
 Let's try opening the `dummy.txt` file in this repo:
 
@@ -85,7 +86,7 @@ Let's try opening the `dummy.txt` file in this repo:
 >>> type(file_object)
 ```
 
-Just like any Python object, we can use `help` to find out more about it and
+Just like any object in Python, we can use `help` to find out more about it and
 see its methods:
 
 ```python
@@ -100,7 +101,7 @@ We can use the `read` method to get a string of the entire file:
 ```
 
 For larger files, getting a string of the entire file is not very efficient.
-Below, we will show a more efficient example.
+Below, we will learn a more efficient approach.
 
 When we are done with the file, whether reading from it or writing to it,
 make sure you **close the file**:
@@ -137,7 +138,7 @@ In your directory you should now see a new file called `my-new-file.txt`:
     $ cat my-new-file.txt
     Hello, this is my new file!
 
-## A simple example
+## A simple example script
 
 Now, let's write a short Python script to parse the `dummy.txt` file in this
 repo.
@@ -184,9 +185,10 @@ Charles Darwin. Check it out:
 
     $ less origin.txt
 
-Your goal is to write a script that will read `origin.txt`
-and find all occurrences of certain words (more on that in a bit)
-and write occurrences to a new file.
+Your goal is to write a script that will read `origin.txt` and find all
+occurrences of certain words and write occurrences to a new file.
+Below, I outline which words to find and the format to use when writing them to
+the new file.
 
 ## The words to find
 
@@ -197,23 +199,65 @@ Use a regular expression pattern to find these.
 
 ## The format of the output file
 
+When you find such a word, write the line number it was found on and the word
+itself separated by a tab (`'\t'`) character.
+For example, here is how the first 10 lines of the file should look:
 
-# Extra challenges (i.e., not required)
+    471	Inheritance
+    660	inherited
+    799	inheritance
+    850	Inheritance
+    914	inheritance
+    991	INHERITANCE
+    993	inherited
+    1000	inherited
+    1046	inherited
+    1047	inheritable
 
--   The code in our `get_smallest_prime_factor` function is not very efficient.
-    Can you improve it?
--   Write another script (module) that calculates and returns a list of prime
-    numbers that are factors of an integer provided at the command line
-    -   Make sure to `import smallest_factor` and use the
-        `get_smallest_prime_factor` function in your new script.
-    -   Make sure to follow the best practices above!
+If two words are found on the same line, both should be written to the file on
+separate lines (they will have the same line number).
+
+## Use best practices
+
+Remember what you learned from the
+[best practices exercise](https://github.com/joaks1/python-script-best-practice):
+
+-   Put meaningful units of code into functions.
+-   Make your script importable as a module; i.e., use the
+    `if __name__ == '__main__':`
+    flow control.
+-   Write informative docstrings to document your script and functions.
+
+Also, try to keep your code general/flexible.
+For example, write your functions so that they can be reused for other
+purposes;
+can you write them so they can be used with other files and other regular
+expression patterns?
+
+# Extra challenges (not required)
+
+If you look at the contents of `origin.txt`, you will notice that the Gutenberg
+Project has added text to the beginning and end of the file.
+Can you you update your script to avoid searching this added text?
+
+Try updating your script so that it can search for any regular expression
+pattern that is provided via the command line.
+
+Try updating your script so that a path to any text file can be specified via
+the command line.
+Your script should then search this file rather than `origin.txt`.
 
 
 # Acknowledgments
 
+Thanks to Project Gutenberg for providing a text version of *On the Origin of
+Species*. The `origin.txt` file was copied from
+<http://www.gutenberg.org/cache/epub/2009/pg2009.txt>.
+
 ## Support
-This work was made possible by funding provided to [Jamie
-Oaks](http://phyletica.org) from the National Science Foundation (DEB 1656004).
+This work was made possible by funding provided to
+[Jamie Oaks](http://phyletica.org)
+from the National Science Foundation (DEB 1656004).
 
 
 # License
@@ -229,6 +273,7 @@ Project Gutenberg under the Project Gutenberg License, which states:
 The full version of the Project Gutenberg License can be found at the end of
 the `origin.txt` file.
 
-All content in this repository other than the `origin.txt` file is licensed under a Creative Commons License:
+All content in this repository other than the `origin.txt` file is licensed
+under a Creative Commons License:
 
 <a rel="license" href="http://creativecommons.org/licenses/by/4.0/deed.en_US"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/deed.en_US">Creative Commons Attribution 4.0 International License</a>.
